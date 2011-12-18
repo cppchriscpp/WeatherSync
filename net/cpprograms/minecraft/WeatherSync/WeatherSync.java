@@ -1,5 +1,6 @@
 package net.cpprograms.minecraft.WeatherSync;
 
+import net.cpprograms.minecraft.General.PluginBase;
 import java.io.*;
 import java.util.HashMap;
 import java.util.List;
@@ -10,9 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
@@ -23,7 +22,7 @@ import org.yaml.snakeyaml.reader.UnicodeReader;
  * @author cppchriscpp
  *
  */
-public class WeatherSync extends JavaPlugin
+public class WeatherSync extends PluginBase
 {
 	
 	/**
@@ -104,7 +103,7 @@ public class WeatherSync extends JavaPlugin
 			Map<String, Object> data = (Map<String, Object>)yaml.load(new UnicodeReader(fIn));
 			
 			if (data.containsKey("world")) {
-				System.err.println("You are using an old config file! You need to update to the newest version. (Blame multiworld.)");
+				logSevere("You are using an old config file! You need to update to the newest version. (Blame multiworld.)");
 				return;
 			}
 			
@@ -119,17 +118,17 @@ public class WeatherSync extends JavaPlugin
 					if (curr.containsKey("rssfile"))
 						temprss = curr.get("rssfile").toString();
 					if (!new File(tempworld+"/level.dat").exists()) {
-						System.err.println("WeatherSync: Warning: "+(tempworld.equals("")?"You forgot to include a name for one of the worlds in your configuration file. This world has been skipped.":"The world "+tempworld+" does not exist. Skipping"));
+						logWarning((tempworld.equals("")?"You forgot to include a name for one of the worlds in your configuration file. This world has been skipped.":"The world "+tempworld+" does not exist. Skipping"));
 						continue;
 					}
 					if (temprss.equals("")) {
-						System.err.println("WeatherSync: Warning: Configuration for "+tempworld+" does not include an rss file to use! Skipping");
+						logWarning("Configuration for "+tempworld+" does not include an rss file to use! Skipping");
 						continue;
 					}
-					weatherLocations.put(tempworld, new WeatherLocation(tempworld, temprss, debug));
+					weatherLocations.put(tempworld, new WeatherLocation(this, tempworld, temprss, debug));
 				}
 			} else {
-				System.err.println("You did not include any worlds in your configuration file!");
+				logWarning("You did not include any worlds in your configuration file!");
 			}
 			
 			if (data.containsKey("updatetime"))
@@ -167,17 +166,17 @@ public class WeatherSync extends JavaPlugin
 		}
 		catch (IOException e) // Problem reading the file; it probably does not exist.
 		{
-			System.err.println("WeatherSync: Could not read your configuration file. Try reinstalling the plugin!");
+			logSevere("Could not read your configuration file. Try reinstalling the plugin!");
 			if (debug)
-				System.err.println(e.toString());
+				logSevere(e.toString());
 			return;
 		}
 		catch (java.lang.NumberFormatException e) // The config file is broken.
 		{
-			System.err.println("WeatherSync: An exception occurred when trying to read your config file.");
-			System.err.println("WeatherSync: Check your config.yml!");
+			logSevere("An exception occurred when trying to read your config file.");
+			logSevere("Check your config.yml!");
 			if (debug)
-				System.err.println(e.toString());
+				logSevere(e.toString());
 			return;
 		}
 		
@@ -192,10 +191,10 @@ public class WeatherSync extends JavaPlugin
 			pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
 		
 		// We've loaded successfully!!
-        PluginDescriptionFile pdfFile = this.getDescription();
-        System.out.println( pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled for " + weatherLocations.size() + " worlds." );
+		
+		super.onEnable();
         if (debug)
-        	System.out.println("WeatherSync: Debug mode is active.");
+        	logInfo("Debug mode is active.");
 	}
 	
 	/*
@@ -235,7 +234,7 @@ public class WeatherSync extends JavaPlugin
 	 */
 	public void onDisable()
 	{
-		
+		super.onDisable();
 	}
 	
 	/**

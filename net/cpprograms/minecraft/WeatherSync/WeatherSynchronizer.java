@@ -67,7 +67,7 @@ public class WeatherSynchronizer implements Runnable {
 			}
 			
 			if (weatherSync.debug)
-				System.out.println("The weather in world "+world.getName()+" is now " + weather.toString().toLowerCase());
+				weatherSync.logInfo("The weather in world "+world.getName()+" is now " + weather.toString().toLowerCase());
 			
 			world.setWeatherDuration(24000);
 			// Save this so that we do not update needlessly in the future.

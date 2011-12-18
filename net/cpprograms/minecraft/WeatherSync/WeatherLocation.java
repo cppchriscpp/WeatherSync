@@ -35,10 +35,10 @@ public class WeatherLocation {
 	 * @param _rssfile The rss file to use to get information.
 	 * @param debug Whether to enable debug mode for this location.
 	 */
-	public WeatherLocation(String _weatherWorld, String _rssfile, boolean debug) {
+	public WeatherLocation(WeatherSync weatherSync, String _weatherWorld, String _rssfile, boolean debug) {
 		weatherWorld = _weatherWorld;
 		rssfile = _rssfile;
-		weatherSystem = new WeatherSystem(rssfile, debug);
+		weatherSystem = new WeatherSystem(weatherSync, rssfile, debug);
 	}
 	
 	/**

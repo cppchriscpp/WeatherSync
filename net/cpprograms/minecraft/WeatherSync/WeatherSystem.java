@@ -4,9 +4,6 @@ package net.cpprograms.minecraft.WeatherSync;
  * @(#)WeatherSystem.java
  * This class handles weather communications; it gets the weather for a given
  * location and returns it in ENUM format.
- *
- * @author
- * @version 1.00 2011/4/21
  */
 
 import java.io.BufferedReader;
@@ -23,6 +20,11 @@ import java.net.MalformedURLException;
  */
 public class WeatherSystem {
 
+	/**
+	 * Access to the plugin.
+	 */
+	private WeatherSync plugin;
+	
 	/**
 	 * The location to get weather for, in the format used in the query.
 	 */
@@ -59,8 +61,9 @@ public class WeatherSystem {
 	/**
 	 * Creates a blank instance of WeatherSystem.
 	 */
-	public WeatherSystem()
+	public WeatherSystem(WeatherSync weatherSync)
 	{
+		plugin = weatherSync;
 		location = "";
 	}
 	
@@ -68,8 +71,9 @@ public class WeatherSystem {
      * Creates a new instance of this class.
      * @param rssfile The rss file to use to update weather.
      */
-    public WeatherSystem(String rssfile) 
+    public WeatherSystem(WeatherSync weatherSync, String rssfile) 
     {
+    	plugin = weatherSync;
     	location = rssfile;
     }
     
@@ -78,7 +82,8 @@ public class WeatherSystem {
      * @param rssfile The rss file to use to update weather.
      * @param debug Whether to turn debug mode on.
      */
-    public WeatherSystem(String rssfile, boolean _debug) {
+    public WeatherSystem(WeatherSync weatherSync, String rssfile, boolean _debug) {
+    	plugin = weatherSync;
     	location = rssfile;
     	debug = _debug;
     }
@@ -145,11 +150,11 @@ public class WeatherSystem {
 		}
 		catch (MalformedURLException e)
 		{
-			System.err.println("WeatherSync: Could not read the weather; the location specified was not valid! Try a zip code.");
-			System.err.println("WeatherSync: You provided: \"" + location + "\"");
+			plugin.logSevere("Could not read the weather; the RSS URL specified was not valid! Check your config file.");
+			plugin.logSevere("You provided: \"" + location + "\"");
 			
 			if (debug)
-				System.err.println(e.toString());
+				plugin.logInfo(e.toString());
 			
 			return theweather;
 		}
@@ -191,18 +196,18 @@ public class WeatherSystem {
 			}
 			if (weatherline.equals("Unknown"))
 			{
-				System.err.println("WeatherSync: Could not read the weather; check your settings.");
+				plugin.logSevere("Could not read the weather; check your settings.");
 				if (debug)
-					System.err.println("Your location is: " + location);
+					plugin.logInfo("Your location is: " + location);
 			}
 			in.close();
 		}
 		catch (Exception e)
 		{ // Catches all errors; mainly IOExceptions. 
-			System.err.println("WeatherSync: Could not read the weather; connection error.");
+			plugin.logWarning("Could not read the weather; connection error.");
 			
 			if (debug)
-				e.printStackTrace(System.err);
+				plugin.logInfo(e.getStackTrace().toString());
 			
 			return theweather;
 		}
