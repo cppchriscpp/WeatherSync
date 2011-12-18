@@ -1,0 +1,7 @@
+name: WeatherSync
+main: net.cpprograms.minecraft.WeatherSync.WeatherSync
+version: 2.0_1
+commands:
+  forecast:
+    description: Shows the current forecast.
+    usage: /forecast

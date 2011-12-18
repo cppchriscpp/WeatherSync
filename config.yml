@@ -1,0 +1,54 @@
+# WeatherSync configuration file
+
+# How frequently to update the weather, in minutes.
+updatetime: 5
+
+# Whether to show the weather/forecast to users on join.
+# (Formatting of this may be possible in the future; request it if
+# you're interested!)
+forecast-on-join: true
+
+# Whether to allow users to use the forecast command.
+forecast-command-enabled: true
+
+# Whether to show the changes in weather to players when it happens
+# Yes, this variable is named poorly.
+show-forecast: false
+
+# Whether to have debug mode on. 
+# You'll want this off for most servers, but turn it on if you have problems and
+# it will give you extra information about what is going wrong. 
+# Please turn this on if you have issues, and report any unusual output.
+debug: false
+
+# The worlds to manage the weather on. 
+# name: The name of the world. 
+# rssfile: The RSS File to get the weather from. 
+#   To get this, get your weather on http://wunderground.com, and
+#   find the rss link for your location. It should be towards the top on 
+#   the right. 
+worlds: 
+    - name: world
+      rssfile: http://rss.wunderground.com/auto/rss_full/CA/San_Francisco.xml?units=english
+#   - name: someplace
+#     rssfile: http://rss.wunderground.com/auto/rss_full/MA/Boston.xml?units=english 
+
+
+# Message configuration!
+# You can change the messages output by this plugin here. 
+# Feel free to ignore this section if you are not interested.
+# Color numbers must be prefixed by [color] (Sorry, yaml doesn't like certain characters)
+# For clear/rain/thunder/snow, [default] contains the more descriptive weather text from the website.
+# You could change these to add color to certain types of weather, or to rename a type of weather
+# to something else. 
+# For example, if you did: 
+#   - rain: raining frogs
+# The user would then see "Currently: raining frogs!" when it rains.
+messages: 
+    weather: "[color]7Currently: [weather]"
+    weather-updated: "[color]7The weather is now [weather]"
+    forecast: "[color]7[forecast]"
+    clear: "[default]"
+    rain: "[default]"
+    snow: "[default]"
+    thunder: "[default]"
