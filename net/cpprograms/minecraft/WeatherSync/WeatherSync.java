@@ -1,5 +1,6 @@
 package net.cpprograms.minecraft.WeatherSync;
 
+import net.cpprograms.minecraft.General.CommandHandler;
 import net.cpprograms.minecraft.General.PluginBase;
 import java.io.*;
 import java.util.HashMap;
@@ -184,8 +185,7 @@ public class WeatherSync extends PluginBase
 		// Start the thread for Synchronizing weather.
 		wsRunner = new WeatherSynchronizer(this);
 		getServer().getScheduler().scheduleAsyncRepeatingTask(this, wsRunner, 120, 1200*updateTimer);
-		
-		
+			
 		PluginManager pm = getServer().getPluginManager();
 		if (forecastOnJoin)
 			pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
@@ -195,37 +195,8 @@ public class WeatherSync extends PluginBase
 		super.onEnable();
         if (debug)
         	logInfo("Debug mode is active.");
-	}
-	
-	/*
-	 * Deals with player commands.
-	 */
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
-	{
-		if (!forecastCommandEnabled)
-			return false;
-		if (command.getName().equals("forecast"))
-		{
-			WeatherLocation useWl = null;
-			if (args.length > 0) {
-				if (weatherLocations.get(args[0]) != null)
-					useWl = weatherLocations.get(args[0]);
-				else
-					sender.sendMessage("§7No forecast available for that world.");
-			} else if (sender instanceof Player) {
-				Player pl = (Player)sender;
-				if (weatherLocations.get(pl.getWorld().getName()) != null)
-					useWl = weatherLocations.get(pl.getWorld().getName());
-				else
-					sender.sendMessage("§7No forecast available for this location.");
-			}
-			if (useWl != null) {
-				sender.sendMessage(getWeatherFormatted(useWl));
-				sender.sendMessage(getForecastFormatted(useWl));
-			}
-			return true;
-		}
-		return false;
+        
+        commandHandler = new CommandHandler(this, ForecastCommandSet.class);
 	}
 	
 	/**

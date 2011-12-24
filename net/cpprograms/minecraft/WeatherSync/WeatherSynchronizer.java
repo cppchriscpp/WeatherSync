@@ -39,7 +39,7 @@ public class WeatherSynchronizer implements Runnable {
 			
 			// Update the weather. We no longer care if it has changed.
 				
-			if (weatherSync.showForecast && weatherLocation.currentWeather != weather)
+			if (weatherSync.showForecast && weatherLocation.currentWeather != weather && world != null && world.getPlayers() != null)
 			 	for (Player pl : world.getPlayers())
 			 		pl.sendMessage(weatherSync.getUpdatedWeatherFormatted(weatherLocation));
 			
