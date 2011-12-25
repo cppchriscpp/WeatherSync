@@ -28,7 +28,7 @@ public class PluginBase extends JavaPlugin {
 	/**
 	 * Debugging mode - determines whether to send debugging messages.
 	 */
-	boolean debugMode = false;
+	boolean debugMode = true;
 	
 	/**
 	 * Logging component.
@@ -127,6 +127,15 @@ public class PluginBase extends JavaPlugin {
 	{
 		if (this.debugMode)
 			this.log(message, Level.INFO);
+	}
+	
+	/**
+	 * Check if we're debugging with this plugin.
+	 * @return true if we're debugging; false otherwise.
+	 */
+	public boolean isDebugging()
+	{
+		return debugMode;
 	}
 	
 	/**

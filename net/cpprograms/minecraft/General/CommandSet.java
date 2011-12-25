@@ -1,5 +1,7 @@
 package net.cpprograms.minecraft.General;
 
+import java.util.Arrays;
+
 import org.bukkit.command.CommandSender;
 
 /**
@@ -25,7 +27,7 @@ import org.bukkit.command.CommandSender;
  ** 	}
  ** 	public boolean global(CommandSender sender, String[] args) {
  **			plugin.getServer().broadcastMessage("hello world! ");
- ** 		sender.sendMessage("You sent in these parameters: "+args.toString());
+ ** 		sender.sendMessage("You sent in these parameters: "+Arrays.toString(args));
  **		}
  *
  * Just implement the methods, and don't bother implementing onCommand; it's all taken care of!
@@ -63,7 +65,7 @@ public abstract class CommandSet
 	 * @param args Any arguments passed in. 
 	 * @return true if handled, false otherwise.
 	 */
-	public boolean help(CommandSender sender, String method, String[] args)
+	public boolean help(CommandSender sender, String[] args)
 	{
 		sender.sendMessage("No help available for this command.");
 		return true;
@@ -93,9 +95,10 @@ public abstract class CommandSet
 	{
 		sender.sendMessage("An internal error occurred while executing the command " + command);
 		plugin.logInfo("An internal error occurred while executing the command " + command + " from " + sender.getName());
-		plugin.logDebug("Params: " + args.toString());
+		plugin.logDebug("Params: " + Arrays.toString(args));
 		plugin.logDebug("Error type: " + e.getClass());
-		plugin.logDebug(e.getMessage());
+		if (plugin.debugMode)
+			e.printStackTrace();
 		return true;
 	}
 	

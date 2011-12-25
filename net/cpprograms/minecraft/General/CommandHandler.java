@@ -50,11 +50,13 @@ public class CommandHandler
 		} catch (InstantiationException e) {
 			plugin.logWarning("Error enabling plugin " + plugin.getName() + " InstanciationException while adding plugin to CommandSet");
 			plugin.logWarning("Commands may not work right!");
-			plugin.logWarning(e.getMessage());
+			if (plugin.isDebugging())
+				e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			plugin.logWarning("Error enabling plugin " + plugin.getName() + " IllegalAccessException while adding plugin to CommandSet");
 			plugin.logWarning("Commands may not work right!");
-			plugin.logWarning(e.getMessage());
+			if (plugin.isDebugging())
+				e.printStackTrace();
 		}
 		
 		// Try to get the method name from the class...
@@ -80,7 +82,8 @@ public class CommandHandler
 				return commands.noParams(sender);
 			
 			String[] args_nocommand = new String[args.length - 1];
-			System.arraycopy(args, 1, args_nocommand, 0, args.length-1);
+			if (args_nocommand.length > 0)
+				System.arraycopy(args, 1, args_nocommand, 0, args.length-1);
 			
 			try 
 			{				
@@ -101,7 +104,8 @@ public class CommandHandler
 			}
 			catch (IllegalAccessException e)
 			{
-				return commands.internalError(sender, command.getName(), args, e);
+				// This happens when a user tries to use a private method. It doesn't exist. ;)
+				return commands.noSuchMethod(sender, args[0], args_nocommand);
 			}
 			return true;
 		}

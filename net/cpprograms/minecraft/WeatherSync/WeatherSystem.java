@@ -154,7 +154,7 @@ public class WeatherSystem {
 			plugin.logSevere("You provided: \"" + location + "\"");
 			
 			if (debug)
-				plugin.logInfo(e.toString());
+				e.printStackTrace();
 			
 			return theweather;
 		}
@@ -207,7 +207,7 @@ public class WeatherSystem {
 			plugin.logWarning("Could not read the weather; connection error.");
 			
 			if (debug)
-				plugin.logInfo(e.getStackTrace().toString());
+				e.printStackTrace();
 			
 			return theweather;
 		}
