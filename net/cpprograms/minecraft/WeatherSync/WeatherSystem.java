@@ -36,10 +36,25 @@ public class WeatherSystem {
 	 */
 	public enum WeatherType
 	{
+		/**
+		 * Weather is undefined.
+		 */
 		UNDEFINED,
+		/**
+		 * Weather is clear.
+		 */
 		CLEAR,
+		/**
+		 * It is raining.
+		 */
 		RAIN,
+		/**
+		 * A thunderstorm is happening.
+		 */
 		THUNDER,
+		/**
+		 * A snow storm is happening (This is unused at current!)
+		 */
 		SNOW
 	};
 	
@@ -60,6 +75,7 @@ public class WeatherSystem {
 	
 	/**
 	 * Creates a blank instance of WeatherSystem.
+	 * @param weatherSync The plugin to attach this to.
 	 */
 	public WeatherSystem(WeatherSync weatherSync)
 	{
@@ -69,6 +85,7 @@ public class WeatherSystem {
 	
     /**
      * Creates a new instance of this class.
+     * @param weatherSync The plugin to attach this to.
      * @param rssfile The rss file to use to update weather.
      */
     public WeatherSystem(WeatherSync weatherSync, String rssfile) 
@@ -79,8 +96,9 @@ public class WeatherSystem {
     
     /**
      * Creates a new instance of this class.
+     * @param weatherSync The plugin to attach this to.
      * @param rssfile The rss file to use to update weather.
-     * @param debug Whether to turn debug mode on.
+     * @param _debug Whether to turn debug mode on.
      */
     public WeatherSystem(WeatherSync weatherSync, String rssfile, boolean _debug) {
     	plugin = weatherSync;

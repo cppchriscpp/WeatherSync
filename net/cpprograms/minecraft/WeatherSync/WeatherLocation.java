@@ -31,6 +31,7 @@ public class WeatherLocation {
 	
 	/**
 	 * Constructor. Does about what you'd expect it to do.
+	 * @param weatherSync The plugin to attach this to.
 	 * @param _weatherWorld The world name to update weather for.
 	 * @param _rssfile The rss file to use to get information.
 	 * @param debug Whether to enable debug mode for this location.

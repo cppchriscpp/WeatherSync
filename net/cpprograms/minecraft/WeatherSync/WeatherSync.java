@@ -7,13 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.PluginManager;
-
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.SafeConstructor;
-import org.yaml.snakeyaml.reader.UnicodeReader;
 
 /**
  * Plugin to sync the weather with local weather.
@@ -76,16 +74,6 @@ public class WeatherSync extends PluginBase
 	private String textForThunder = "[default]";
 	
 	/**
-	 * Debug mode on or off?
-	 */
-	public boolean debug = false;
-	
-	/**
-	 * YAML config reader.
-	 */
-	private final Yaml yaml = new Yaml(new SafeConstructor());
-	
-	/**
 	 * Runs when the plugin is enabled; starts the thread that updates the weather.
 	 */
 	public void onEnable()
@@ -94,20 +82,15 @@ public class WeatherSync extends PluginBase
 		// Read in YAML
 		try
 		{
-
-			FileInputStream fIn = new FileInputStream(new File(this.getDataFolder(), "config.yml"));
-			
-			@SuppressWarnings("unchecked")
-			Map<String, Object> data = (Map<String, Object>)yaml.load(new UnicodeReader(fIn));
-			
-			if (data.containsKey("world")) {
+			FileConfiguration config = getConfig();
+			if (config.contains("world")) {
 				logSevere("You are using an old config file! You need to update to the newest version. (Blame multiworld.)");
 				return;
 			}
 			
-			if (data.containsKey("worlds")) {
+			if (config.contains("worlds")) {
 				@SuppressWarnings("unchecked")
-				List<Map<String, Object>> lst = (List<Map<String, Object>>)data.get("worlds");
+				List<Map<String, Object>> lst = (List<Map<String, Object>>)config.get("worlds");
 				for (Map<String, Object> curr : lst) {
 					String tempworld = "";
 					String temprss = "";
@@ -123,28 +106,26 @@ public class WeatherSync extends PluginBase
 						logWarning("Configuration for "+tempworld+" does not include an rss file to use! Skipping");
 						continue;
 					}
-					weatherLocations.put(tempworld, new WeatherLocation(this, tempworld, temprss, debug));
+					weatherLocations.put(tempworld, new WeatherLocation(this, tempworld, temprss, isDebugging()));
 				}
 			} else {
 				logWarning("You did not include any worlds in your configuration file!");
 			}
 			
-			if (data.containsKey("updatetime"))
-				updateTimer = Integer.parseInt(data.get("updatetime").toString());
+			if (config.contains("updatetime"))
+				updateTimer = config.getInt("updatetime");
 
-			if(data.containsKey("forecast-on-join"))
-				forecastOnJoin = Boolean.parseBoolean(data.get("forecast-on-join").toString());
-			if(data.containsKey("show-forecast"))
-				showForecast = Boolean.parseBoolean(data.get("show-forecast").toString());
-			if(data.containsKey("forecast-command-enabled"))
-				forecastCommandEnabled = Boolean.parseBoolean(data.get("forecast-command-enabled").toString());
-			if(data.containsKey("debug"))
-				debug = Boolean.parseBoolean(data.get("debug").toString());
+			if(config.contains("forecast-on-join"))
+				forecastOnJoin = config.getBoolean("forecast-on-join");
+			if(config.contains("show-forecast"))
+				showForecast = config.getBoolean("show-forecast");
+			if(config.contains("forecast-command-enabled"))
+				forecastCommandEnabled = config.getBoolean("forecast-command-enabled");
 			
 			// Message customization!
-			if (data.containsKey("messages")) {
-				@SuppressWarnings("unchecked")
-				Map<String, Object> msgs = (Map<String, Object>)data.get("messages");
+			if (config.contains("messages") && config.isConfigurationSection("messages")) {
+				ConfigurationSection sect = getConfig().getConfigurationSection("messages");
+				Map<String, Object> msgs = sect.getValues(false);
 				if (msgs.containsKey("weather"))
 					weatherFormat = msgs.get("weather").toString().replace("[color]", "§");
 				if (msgs.containsKey("weather-updated"))
@@ -162,19 +143,12 @@ public class WeatherSync extends PluginBase
 			}
 			
 		}
-		catch (IOException e) // Problem reading the file; it probably does not exist.
-		{
-			logSevere("Could not read your configuration file. Try reinstalling the plugin!");
-			if (debug)
-				logSevere(e.toString());
-			return;
-		}
 		catch (java.lang.NumberFormatException e) // The config file is broken.
 		{
 			logSevere("An exception occurred when trying to read your config file.");
 			logSevere("Check your config.yml!");
-			if (debug)
-				logSevere(e.toString());
+			if (isDebugging())
+				e.printStackTrace();
 			return;
 		}
 		
@@ -190,8 +164,6 @@ public class WeatherSync extends PluginBase
 		// We've loaded successfully!!
 		
 		super.onEnable();
-        if (debug)
-        	logInfo("Debug mode is active.");
         
         commandHandler = new CommandHandler(this, ForecastCommandSet.class);
 	}
@@ -223,6 +195,11 @@ public class WeatherSync extends PluginBase
 		return weatherFormat.replace("[weather]", getCurrentWeather(wl));
 	}
 	
+	/**
+	 * Gets the newly-updated weather in a formatted manner.
+	 * @param wl The WeatherLocation to get the weather for.
+	 * @return A string containing this new weather which can be displayed to the user.
+	 */
 	public String getUpdatedWeatherFormatted(WeatherLocation wl) {
 		return weatherUpdatedFormat.replace("[weather]", getCurrentWeather(wl));
 	}
