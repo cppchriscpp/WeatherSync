@@ -1,5 +1,5 @@
 WeatherSync Plugin
-Version 2.0
+Version 2.1.1
 
 Introduction
 ------------
@@ -23,12 +23,13 @@ Installation
 ------------
 
 Simply drop WeatherSync.jar and the WeatherSync folder in your plugins folder,
-then open the configuration file and set it up with the location you would like
-to sync weather with. 
+restart the server once to create the default configuration file, then edit the
+newly created WeatherSync/config.yml file to set your location, and it should
+work!
 
 You NEED to configure the plugin before it will work.
 
-Those upgrading from 2.0 will need to create a new configuration file. A lot has
+Those upgrading from 1.2 will need to create a new configuration file. A lot has
 changed, and your old file will not work! It is suggested that you rename your
 old configuration file, then copy the new one over, then update the new one with
 the details from your old configuration file.
