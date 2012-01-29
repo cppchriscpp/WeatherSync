@@ -9,8 +9,6 @@ import java.util.Map;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.event.Event;
-import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.PluginManager;
 
 /**
@@ -159,7 +157,7 @@ public class WeatherSync extends PluginBase
 			
 		PluginManager pm = getServer().getPluginManager();
 		if (forecastOnJoin)
-			pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
+			pm.registerEvents(playerListener, this);
 		
 		// We've loaded successfully!!
 		

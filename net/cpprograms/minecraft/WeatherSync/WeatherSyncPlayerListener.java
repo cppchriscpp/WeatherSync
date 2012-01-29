@@ -5,13 +5,14 @@ package net.cpprograms.minecraft.WeatherSync;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 
 /**
  * @author cppchriscpp
  * Sends players information upon their joining, if necessary.
  */
-public class WeatherSyncPlayerListener extends PlayerListener {
+public class WeatherSyncPlayerListener implements Listener {
 	
 	/**
 	 * The WeatherSync plugin to refer to.
@@ -36,6 +37,7 @@ public class WeatherSyncPlayerListener extends PlayerListener {
 	 * Called when a player joins the game.
 	 * @param event The PlayerJoinEvent representing this.
 	 */
+	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event)
 	{
 		cjoin = event.getPlayer();
