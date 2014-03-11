@@ -4,8 +4,6 @@ Version 2.1.1
 Introduction
 ------------
 
-Hello, and thank you for downloading my Bukkit plugin.
-
 This plugin syncs the weather in Minecraft with the real-world weather in
 a set location. Simply set up the location and forget about it. 
 
