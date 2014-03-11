@@ -1,5 +1,5 @@
 WeatherSync Plugin
-Version 2.1.1
+Version 2.1.3
 
 Introduction
 ------------
