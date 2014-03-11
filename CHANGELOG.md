@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 2.1.4
+-------------
+
+* Fixes an issue with worlds stored in a location other than the default. 
+
 Version 2.1.3
 -------------
 
