@@ -21,6 +21,7 @@ public class ForecastCommandSet extends CommandSet {
 	/**
 	 * Setter for our plugin.
 	 */
+	@Override
 	public void setPlugin(PluginBase plugin)
 	{
 		this.plugin = (WeatherSync) plugin;
@@ -33,6 +34,7 @@ public class ForecastCommandSet extends CommandSet {
 	 * @param params Unused.
 	 * @return true if this was handled, false otherwise.
 	 */
+	@Override
 	public boolean noSuchMethod(CommandSender sender, String method, String[] params)
 	{
 		if (!plugin.forecastCommandEnabled)
@@ -54,6 +56,7 @@ public class ForecastCommandSet extends CommandSet {
 	 * @param sender The entity responsible for sending this request.
 	 * @return true if this was handled, false otherwise.
 	 */
+	@Override
 	public boolean noParams(CommandSender sender)
 	{
 		if (!(sender instanceof Player))

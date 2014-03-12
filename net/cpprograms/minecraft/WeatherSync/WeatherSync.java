@@ -2,11 +2,11 @@ package net.cpprograms.minecraft.WeatherSync;
 
 import net.cpprograms.minecraft.General.CommandHandler;
 import net.cpprograms.minecraft.General.PluginBase;
-import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
@@ -74,6 +74,7 @@ public class WeatherSync extends PluginBase
 	/**
 	 * Runs when the plugin is enabled; starts the thread that updates the weather.
 	 */
+	@Override
 	public void onEnable()
 	{
 		weatherLocations = new HashMap<String, WeatherLocation>();
@@ -96,7 +97,7 @@ public class WeatherSync extends PluginBase
 						tempworld = curr.get("name").toString();
 					if (curr.containsKey("rssfile"))
 						temprss = curr.get("rssfile").toString();
-					if (!new File(tempworld+"/level.dat").exists()) {
+					if (Bukkit.getWorld(tempworld) == null) {
 						logWarning((tempworld.equals("")?"You forgot to include a name for one of the worlds in your configuration file. This world has been skipped.":"The world "+tempworld+" does not exist. Skipping"));
 						continue;
 					}
@@ -170,6 +171,7 @@ public class WeatherSync extends PluginBase
 	 * Run this when the plugin is disabled. 
 	 * (Required method.)
 	 */
+	@Override
 	public void onDisable()
 	{
 		super.onDisable();

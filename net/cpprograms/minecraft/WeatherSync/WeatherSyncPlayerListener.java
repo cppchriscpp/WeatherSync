@@ -43,6 +43,7 @@ public class WeatherSyncPlayerListener implements Listener {
 		cjoin = event.getPlayer();
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, 
 				new Runnable() {
+					@Override
 					public void run()
 					{
 						if (plugin.weatherLocations.get(cjoin.getWorld().getName()) != null) {
