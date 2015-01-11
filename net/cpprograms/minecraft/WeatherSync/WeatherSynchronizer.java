@@ -25,6 +25,16 @@ public class WeatherSynchronizer implements Runnable {
 		weatherSync = plugin;
 	}
 	
+	private void setStorm(World world, boolean stormy, boolean thundery) {
+		if (world.hasStorm() != stormy) {
+			world.setStorm(stormy);
+		}
+		
+		if (world.isThundering() != thundery) {
+			world.setThundering(thundery);
+		}
+	}
+	
 	/**
 	 * The run method, which updates the weather every X amount of time.
 	 */
@@ -45,24 +55,20 @@ public class WeatherSynchronizer implements Runnable {
 			
 			if (weather == WeatherType.CLEAR)
 			{
-				world.setStorm(false);
-				world.setThundering(false);
+				setStorm(world, false, false);
 			}
 			else if (weather == WeatherType.RAIN)
 			{
-				world.setStorm(true);
-				world.setThundering(false);
+				setStorm(world, true, false);
 			}
 			else if (weather == WeatherType.SNOW)
 			{
 				// TODO: Can anything be done with this?
-				world.setStorm(true);
-				world.setThundering(false);
+				setStorm(world, true, false);
 			}
 			else if (weather == WeatherType.THUNDER)
 			{
-				world.setStorm(true);
-				world.setThundering(true);
+				setStorm(world, true, true);
 				world.setThunderDuration(24000);
 			}
 			

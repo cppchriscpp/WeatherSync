@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 2.1.5
+-------------
+
+* Don't send weather change events when we didn't actually change the weather. Should help with compatibility.
+
 Version 2.1.4
 -------------
 

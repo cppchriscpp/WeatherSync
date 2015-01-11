@@ -154,7 +154,7 @@ public class WeatherSync extends PluginBase
 		
 		// Start the thread for Synchronizing weather.
 		wsRunner = new WeatherSynchronizer(this);
-		getServer().getScheduler().scheduleAsyncRepeatingTask(this, wsRunner, 120, 1200*updateTimer);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, wsRunner, 120, 1200*updateTimer);
 			
 		PluginManager pm = getServer().getPluginManager();
 		if (forecastOnJoin)
