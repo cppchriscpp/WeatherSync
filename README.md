@@ -14,7 +14,7 @@ It uses wunderground as its source, so if you can make it appear on wunderground
 you should be able to make it work with this. If nothing else seems to be working,
 grab the station ID and use that.
 
-The weather for this is provided by WeatherUnderground: http://wunderground.com
+The weather for this is provided by WeatherUnderground: http://classic.wunderground.com
 
 
 Installation
