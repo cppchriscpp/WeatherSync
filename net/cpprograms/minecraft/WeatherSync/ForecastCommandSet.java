@@ -8,7 +8,6 @@ import net.cpprograms.minecraft.General.PluginBase;
 
 /**
  * Handler for the Forecast command.
- * @author cppchriscpp
  *
  */
 public class ForecastCommandSet extends CommandSet {
@@ -46,7 +45,7 @@ public class ForecastCommandSet extends CommandSet {
 			sender.sendMessage(plugin.getForecastFormatted(useWl));
 		}
 		else
-			sender.sendMessage("§7No forecast available for that world.");
+			sender.sendMessage("ï¿½7No forecast available for that world.");
 			
 		return true;
 	}
@@ -61,7 +60,7 @@ public class ForecastCommandSet extends CommandSet {
 	{
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage("§7You must provide a world name.");
+			sender.sendMessage("ï¿½7You must provide a world name.");
 			return true;
 		}
 		Player pl = (Player)sender;
@@ -72,7 +71,7 @@ public class ForecastCommandSet extends CommandSet {
 			sender.sendMessage(plugin.getForecastFormatted(useWl));
 		}
 		else
-			sender.sendMessage("§7No forecast available for this location.");
+			sender.sendMessage("ï¿½7No forecast available for this location.");
 		return true;
 	}
 	

@@ -5,7 +5,6 @@ package net.cpprograms.minecraft.WeatherSync;
 
 /**
  * Simple class to hold the various things used for a location to sync weather to.
- * @author cppchriscpp
  *
  */
 public class WeatherLocation {

@@ -7,7 +7,6 @@ import net.cpprograms.minecraft.WeatherSync.WeatherSystem.WeatherType;
 
 /**
  * The actual weather synchronization class. Runnable.
- * @author cppchriscpp
  */
 public class WeatherSynchronizer implements Runnable {
 

@@ -9,7 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 /**
- * @author cppchriscpp
  * Sends players information upon their joining, if necessary.
  */
 public class WeatherSyncPlayerListener implements Listener {

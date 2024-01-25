@@ -15,7 +15,6 @@ import java.net.MalformedURLException;
 /**
  * Class to get the weather from a source (wunderground) and convert
  * it into the simple terms needed for our purposes.
- * @author cppchriscpp
  *
  */
 public class WeatherSystem {

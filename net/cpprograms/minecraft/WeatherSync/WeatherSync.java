@@ -13,7 +13,6 @@ import org.bukkit.plugin.PluginManager;
 
 /**
  * Plugin to sync the weather with local weather.
- * @author cppchriscpp
  *
  */
 public class WeatherSync extends PluginBase
@@ -63,9 +62,9 @@ public class WeatherSync extends PluginBase
 	 * Various formatting options. Overridden by configuration files, and used
 	 * internally.
 	 */
-	private String weatherFormat = "§7Currently: [weather]";
-	private String weatherUpdatedFormat = "§7 The weather is now [weather]";
-	private String forecastFormat = "§7[forecast]";
+	private String weatherFormat = "ï¿½7Currently: [weather]";
+	private String weatherUpdatedFormat = "ï¿½7 The weather is now [weather]";
+	private String forecastFormat = "ï¿½7[forecast]";
 	private String textForClear = "[default]";
 	private String textForRain = "[default]";
 	private String textForSnow = "[default]";
@@ -126,19 +125,19 @@ public class WeatherSync extends PluginBase
 				ConfigurationSection sect = getConfig().getConfigurationSection("messages");
 				Map<String, Object> msgs = sect.getValues(false);
 				if (msgs.containsKey("weather"))
-					weatherFormat = msgs.get("weather").toString().replace("[color]", "§");
+					weatherFormat = msgs.get("weather").toString().replace("[color]", "ï¿½");
 				if (msgs.containsKey("weather-updated"))
-					weatherUpdatedFormat = msgs.get("weather-updated").toString().replace("[color]", "§");
+					weatherUpdatedFormat = msgs.get("weather-updated").toString().replace("[color]", "ï¿½");
 				if (msgs.containsKey("forecast"))
-					forecastFormat = msgs.get("forecast").toString().replace("[color]", "§");
+					forecastFormat = msgs.get("forecast").toString().replace("[color]", "ï¿½");
 				if (msgs.containsKey("clear"))
-					textForClear = msgs.get("clear").toString().replace("[color]", "§");
+					textForClear = msgs.get("clear").toString().replace("[color]", "ï¿½");
 				if (msgs.containsKey("rain"))
-					textForRain = msgs.get("rain").toString().replace("[color]", "§");
+					textForRain = msgs.get("rain").toString().replace("[color]", "ï¿½");
 				if (msgs.containsKey("snow"))
-					textForSnow = msgs.get("snow").toString().replace("[color]", "§");
+					textForSnow = msgs.get("snow").toString().replace("[color]", "ï¿½");
 				if (msgs.containsKey("thunder"))
-					textForThunder = msgs.get("thunder").toString().replace("[color]", "§");
+					textForThunder = msgs.get("thunder").toString().replace("[color]", "ï¿½");
 			}
 			
 		}
